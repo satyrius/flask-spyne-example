@@ -8,6 +8,10 @@ Clone repository, create virtualenv and install requirements:
     
 ## Usage
 
-Run Flask web server using `./manage.py`. Try some Flask views to make shure it works.
+Run Flask web server using `./manage.py`. Try some Flask views to make shure it works:
 
     curl http://127.0.0.1:5000/api/version
+    
+Here is a Spyne views call example
+
+    curl http://localhost:5000/say_hello?name=Anton\&times=3

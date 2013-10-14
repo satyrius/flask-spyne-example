@@ -1,12 +1,11 @@
 from spyne.application import Application
-from spyne.protocol.soap import Soap11
-from spyne.server.wsgi import WsgiApplication
-
 from spyne.decorator import srpc
-from spyne.service import ServiceBase
 from spyne.model.complex import Iterable
-from spyne.model.primitive import Integer
-from spyne.model.primitive import Unicode
+from spyne.model.primitive import Integer, Unicode
+from spyne.protocol.http import HttpRpc
+from spyne.protocol.json import JsonDocument
+from spyne.server.wsgi import WsgiApplication
+from spyne.service import ServiceBase
 
 
 class HelloWorldService(ServiceBase):
@@ -18,6 +17,9 @@ class HelloWorldService(ServiceBase):
 
 application = Application(
     [HelloWorldService], 'flask-spyne-example',
-    in_protocol=Soap11(validator='lxml'), out_protocol=Soap11())
+    # The input protocol is set as HttpRpc to make our service easy to call.
+    in_protocol=HttpRpc(validator='soft'),
+    out_protocol=JsonDocument(ignore_wrappers=True),
+)
 
 wsgi_application = WsgiApplication(application)
